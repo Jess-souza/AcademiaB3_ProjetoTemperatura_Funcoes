@@ -8,34 +8,44 @@ public class Main {
     }
 
     public static void main(String[] args) {
+        Scanner input = new Scanner(System.in);
+        int quantidade;
+        double[] temperaturas;
+        double media = 0;
         double resultado;
         initialize();
 
+        System.out.print("Digite a quantidade de temperatura(s) para conversão: ");
+        quantidade = input.nextInt();
+
+        temperaturas = new double[quantidade];
+
+        for (int i = 0; i < quantidade; i++) {
+            System.out.println("Digite o valor da temperatura: " + i);
+            temperaturas[i] = input.nextDouble();
+        }
+
         UnityTemp unityInput = getUnityTemp("entrada: ");
         UnityTemp unityOutput = getUnityTemp("saída: ");
+
+
         double temp = getTemp();
 
         System.out.println("Você vai transformar " + temp + " " + unityInput + " em " + unityOutput);
-
         switch (unityOutput) {
             case CELSIUS:
                 resultado = toCelsiusTransform(unityInput, temp);
                 break;
-
             case FAHRENHEIT:
                 resultado = toFahrenheitTransform(unityInput, temp);
                 break;
-
             case KELVIN:
                 resultado = toKelvinTransform(unityInput, temp);
                 break;
-
             default:
                 resultado = 0;
                 break;
-
         }
-
         System.out.printf("O resultado da conversão é %f", resultado);
     }
 
@@ -80,12 +90,4 @@ public class Main {
                 return temp;
         }
     }
-
-        /*if (type == UnityTemp.CELSIUS) {
-            return temp - 273.15;
-        } else if (type == UnityTemp.FAHRENHEIT) {
-            return (temp * 1.8) - 459.67;
-        } else {
-            return temp;
-        }*/
 }
