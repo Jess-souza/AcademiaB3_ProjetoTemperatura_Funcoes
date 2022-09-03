@@ -46,7 +46,7 @@ public class Main {
                     break;
 
             }
-            System.out.printf("O resultado da conversão é %f" /n, resultado);
+            System.out.printf("O resultado da conversão é %f", resultado);
         }
 
     }
