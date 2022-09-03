@@ -28,25 +28,27 @@ public class Main {
         UnityTemp unityInput = getUnityTemp("entrada: ");
         UnityTemp unityOutput = getUnityTemp("saída: ");
 
+        for (double temp : temperaturas) {
 
-        double temp = getTemp();
+            System.out.println("Você vai transformar " + temp + " " + unityInput + " em " + unityOutput);
+            switch (unityOutput) {
+                case CELSIUS:
+                    resultado = toCelsiusTransform(unityInput, temp);
+                    break;
+                case FAHRENHEIT:
+                    resultado = toFahrenheitTransform(unityInput, temp);
+                    break;
+                case KELVIN:
+                    resultado = toKelvinTransform(unityInput, temp);
+                    break;
+                default:
+                    resultado = 0;
+                    break;
 
-        System.out.println("Você vai transformar " + temp + " " + unityInput + " em " + unityOutput);
-        switch (unityOutput) {
-            case CELSIUS:
-                resultado = toCelsiusTransform(unityInput, temp);
-                break;
-            case FAHRENHEIT:
-                resultado = toFahrenheitTransform(unityInput, temp);
-                break;
-            case KELVIN:
-                resultado = toKelvinTransform(unityInput, temp);
-                break;
-            default:
-                resultado = 0;
-                break;
+            }
+            System.out.printf("O resultado da conversão é %f" /n, resultado);
         }
-        System.out.printf("O resultado da conversão é %f", resultado);
+
     }
 
     private static UnityTemp getUnityTemp(String nomeQualquerDeVariavel) {
@@ -64,7 +66,7 @@ public class Main {
         if (type == UnityTemp.CELSIUS) {
             return (temp * 1.8) + 32;
         } else if (type == UnityTemp.KELVIN) {
-            return (temp * 1.8) - 459.67;
+            return ((temp -32)* 1.8) + 273.15;
         } else {
             return temp;
         }
@@ -74,7 +76,7 @@ public class Main {
         if (type == UnityTemp.FAHRENHEIT) {
             return (temp - 32) / 1.8;
         } else if (type == UnityTemp.KELVIN) {
-            return temp - 273.15;
+            return temp + 273.15;
         } else {
             return temp;
         }
@@ -85,7 +87,7 @@ public class Main {
             case CELSIUS:
                 return temp - 273.15;
             case FAHRENHEIT:
-                return (temp * 1.8) - 459.67;
+                return ((temp - 273.15) * 1.8 )+ 32;
             default:
                 return temp;
         }
