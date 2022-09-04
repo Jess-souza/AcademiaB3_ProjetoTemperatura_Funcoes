@@ -1,3 +1,5 @@
+import java.io.PrintStream;
+import java.util.Arrays;
 import java.util.Scanner;
 
 public class Main {
@@ -11,12 +13,14 @@ public class Main {
         Scanner input = new Scanner(System.in);
         int quantidade;
         double[] temperaturas;
-        double media = 0;
-        double resultado;
+        double media;
+        double mediaFinal = 0;
+        double resultado = 0;
         initialize();
 
         System.out.print("Digite a quantidade de temperatura(s) para conversão: ");
         quantidade = input.nextInt();
+
 
         temperaturas = new double[quantidade];
 
@@ -46,8 +50,21 @@ public class Main {
                     break;
 
             }
-            System.out.printf("O resultado da conversão é %f", resultado);
+
+            System.out.printf("O resultado da conversão é %.2f ", resultado);
+
+            mediaFinal += resultado;
+
         }
+
+
+
+        media = Arrays.stream(temperaturas).sum();
+        media /= quantidade;
+        System.out.printf("\nA média das %d temperaturas iniciais é %.2f", quantidade, media);
+
+        mediaFinal = mediaFinal / quantidade;
+        System.out.printf("\nA média das %d temperaturas finais é %.2f", quantidade, mediaFinal);
 
     }
 
@@ -63,20 +80,22 @@ public class Main {
     }
 
     public static double toFahrenheitTransform(UnityTemp type, double temp) {
-        if (type == UnityTemp.CELSIUS) {
-            return (temp * 1.8) + 32;
-        } else if (type == UnityTemp.KELVIN) {
-            return ((temp -32)* 1.8) + 273.15;
-        } else {
-            return temp;
+        switch (type) {
+            case CELSIUS:
+                return (temp * 1.8) + 32;
+            case KELVIN:
+                return (temp - 273.15) * 1.8 + 32;
+            default:
+                return temp;
         }
     }
+
 
     public static double toCelsiusTransform(UnityTemp type, double temp) {
         if (type == UnityTemp.FAHRENHEIT) {
             return (temp - 32) / 1.8;
         } else if (type == UnityTemp.KELVIN) {
-            return temp + 273.15;
+            return temp - 273.15;
         } else {
             return temp;
         }
@@ -85,9 +104,9 @@ public class Main {
     public static double toKelvinTransform(UnityTemp type, double temp) {
         switch (type) {
             case CELSIUS:
-                return temp - 273.15;
+                return temp + 273.15;
             case FAHRENHEIT:
-                return ((temp - 273.15) * 1.8 )+ 32;
+                return 273.15 + ((temp - 32) * (5.0 / 9.0));
             default:
                 return temp;
         }
